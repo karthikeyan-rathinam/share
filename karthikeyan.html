@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" itemscope
+      itemtype="karthikeyan6394.html?trackSharing=1">
+
+<!-- Mirrored from qrco.de/karthikeyan by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Aug 2024 19:38:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <link rel="stylesheet" type="text/css" href="https://qrco.de/css/build/pages/dsocial/template_normal.min.css?v=80f1804f0133fd04574f54bb834a0e75079aa633" />
+<script type="text/javascript">
+/*<![CDATA[*/
+YII_CSRF_TOKEN='01947d575379af894bfe690b6b6e514d7a5914bd';
+/*]]>*/
+</script>
+<title>Social Media Page</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="shortcut icon" href="https://qrco.de/img/favicon/favicon.ico" type="image/x-icon"/>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!--Facebook meta-->
+    <meta property="og:url"
+          content="http://qrco.de/karthikeyan?trackSharing=1"/>
+    <meta property="og:title" content="Connect with us on social media"/>
+    <meta property="og:description" content="Follow us and get updates delivered to your favorite social media channel."/>
+    <meta property="og:image" content="http:"/>
+    <meta property="og:image:width" content="200"/>
+    <meta property="og:image:height" content="200"/>
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://qrco.de/karthikeyan?trackSharing=1">
+    <meta name="twitter:title" content="Connect with us on social media">
+    <meta name="twitter:description" content="Follow us and get updates delivered to your favorite social media channel.">
+    <meta name="twitter:image" content="http:">
+    <meta name="twitter:image:width" content="200">
+    <meta name="twitter:image:height" content="200">
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="Connect with us on social media">
+    <meta itemprop="description" content="Follow us and get updates delivered to your favorite social media channel.">
+    <meta itemprop="image" content="http:">
+
+</head>
+<body ng-app="app" id="dsocial-body" ng-controller="ComplexController"
+      class="{{isColorLight(view.code.color1) ? 'darkTheme' : 'whiteTheme'}}">
+
+<div class="loading-welcome active welcome-screen"
+     ng-style="{'background-color': view.code.welcome_extra.background || view.welcome_extra.background}"
+        style="background-color: #ffffff">
+    <div class="progress">
+        <div class="loading-bar indeterminate" ng-style="{'background-color': view.code.color1 || view.color1}"></div>
+    </div>
+    <div class="helper"></div>
+    <img id="welcomeImg" imageonload ng-src="{{view.welcome_screen || '//s3.eu-central-1.amazonaws.com/qrcgappcdn/social-media-solution/welcome.png'}}"
+         ng-style="{
+            'max-width': view.code.welcome_extra.zoom *2 || view.welcome_extra.zoom *2 + 'px',
+            'max-height': view.code.welcome_extra.zoom *2 || view.welcome_extra.zoom *2 + 'px',
+            'animation-iteration-count' :  view.showPreview == 'infinite' ? 'infinite' : '',
+            'animation-direction' :  view.showPreview == 'infinite' ? 'alternate' : ''
+            }">
+</div>
+
+
+<div class="vcard-template style2" id="rootElement">
+    <div ng-if="!view.code.avatar && !view.code.customHeaderImage">
+        <div class="solid-bgd" ng-style="setSolidBgd()">
+        </div>
+    </div>
+    <div ng-if="view.code.avatar || view.code.customHeaderImage">
+        <div class="blur-bgd hidden-sm hidden-xs"
+             ng-style="{'background': view.code.avatar.length > 0 || view.code.customHeaderImage !=undefined ? 'url(' + (view.code.avatar.length > 0 ? view.code.avatar : view.code.customHeaderImage.url) +')' : 'none'}"
+             ng-class="{'blur-no-avatar':!view.code.avatar && !view.code.customHeaderImage}">
+        </div>
+    </div>
+    <div class="bgd-shadow"></div>
+    <!--    <pre>avatar_extra: {{view.code.avatar_extra | json}}</pre>-->
+    <!--    <pre>welcome_extra: {{view.code.welcome_extra | json}}</pre>-->
+    <div class="page-home page">
+        <div class="vcard-header">
+            <div class="vcard-header-wrapper">
+                <div class="vcard-top-info avatar-container" ng-style="setAvatarExtra()">
+                </div>
+                <div class="event-section-title"
+                     ng-class="{'shadow-2': !view.code.avatar || !view.code.customHeaderImage}"
+                     ng-style="getBackgroundColor();">
+                    <div class="event-content-container">
+                        <div class="event-title dynamicTextColor">{{view.code.title}}</div>
+                        <div class="event-teaser mt-10 dynamicTextColor"
+                             ng-show="view.code.teaser && (view.code.avatar || view.code.customHeaderImage)">
+                            {{view.code.teaser}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="event-body">
+            <div class="vcard-body-wrapper">
+                <div class="vcard-body">
+                    <div id="devent-details">
+    <div class="channel-container event-teaser"
+         ng-if="view.code.avatar == '' && !view.code.customHeaderImage && view.code.teaser">
+        <span class="table-cell-middle">{{view.code.teaser}}</span>
+    </div>
+    <a ng-href="{{getChannelLink(channel)}}"
+       target="{{!loadDemo ? '_blank' : '_self'}}"
+       class="channel-container"
+       id="channel-item-{{channel.name}}"
+       ng-click="loadDemo ? callAction($event,'channelAction') : ''"
+       ng-repeat="channel in view.code.channels track by $index">
+        <div class="table-cell-middle1 pl-55 pos-relative">
+            <div class="channel-bgd-{{channel.name | toIconName}}"
+                 ng-style="{top: channel.label ? 'calc(50% - 20px)' : 'calc(50% - 15px)'}">
+                <i ng-if="channel.name != 'Snapchat'"
+                   class="icon-social-{{channel.name | toIconName}}"></i>
+                <svg ng-if="channel.name == 'Snapchat'" version="1.1" id="Ebene_1"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px"
+                     viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+<g>
+    <path stroke-linejoin="round" stroke="black" stroke-width="1" d="M29.8,25.6c-2.9-0.5-4.2-3.5-4.2-3.6c0,0,0,0,0,0c-0.2-0.4-0.2-0.7-0.1-0.9c0.2-0.5,0.8-0.7,1.3-0.8c0.1,0,0.2-0.1,0.3-0.1
+		c0.7-0.3,0.9-0.6,0.9-0.8c0-0.2-0.2-0.4-0.5-0.5l0,0c-0.1,0-0.2-0.1-0.3-0.1c-0.1,0-0.2,0-0.3,0.1c-0.4,0.2-0.7,0.3-1,0.3h0
+		c-0.4,0-0.5-0.2-0.6-0.2c0-0.2,0-0.4,0-0.6l0-0.1c0.1-1.4,0.2-3.1-0.2-4.1c-1.3-2.9-4-3.2-4.9-3.2l0,0c0,0-0.3,0-0.4,0
+		c-0.8,0-3.6,0.2-4.9,3.2c-0.4,1-0.3,2.7-0.2,4.1c0,0.2,0,0.4,0,0.6c0,0-0.2,0.2-0.6,0.2c-0.3,0-0.6-0.1-1-0.3c-0.1,0-0.1,0-0.2,0
+		c-0.3,0-0.7,0.2-0.8,0.5c0,0.2,0,0.5,0.9,0.9c0.1,0,0.2,0.1,0.3,0.1c0.4,0.1,1.1,0.3,1.3,0.8c0.1,0.3,0.1,0.6-0.1,0.9c0,0,0,0,0,0
+		c-0.1,0.1-1.3,3.1-4.2,3.6c-0.1,0-0.2,0.1-0.2,0.2c0,0,0,0.1,0,0.1c0.1,0.3,0.7,0.7,2.5,1c0.2,0,0.2,0.3,0.3,0.7
+		c0,0.2,0.1,0.3,0.1,0.5c0.1,0.2,0.2,0.2,0.3,0.2c0.1,0,0.3,0,0.4-0.1c0.3-0.1,0.7-0.1,1.1-0.1c0.3,0,0.5,0,0.8,0.1
+		c0.6,0.1,1,0.4,1.6,0.8c0.7,0.5,1.5,1.1,2.7,1.1c0,0,0.1,0,0.1,0h0c0.1,0,0.1,0,0.2,0c1.2,0,1.9-0.5,2.7-1.1c0.5-0.4,1-0.7,1.5-0.8
+		c0.3,0,0.6-0.1,0.8-0.1c0.5,0,0.8,0.1,1.1,0.1c0.2,0,0.3,0.1,0.4,0.1h0c0.1,0,0.2-0.1,0.3-0.2c0-0.2,0.1-0.3,0.1-0.5
+		c0.1-0.4,0.2-0.6,0.3-0.7c1.9-0.3,2.4-0.7,2.5-1c0,0,0-0.1,0-0.1C30,25.7,29.9,25.6,29.8,25.6z"
+          fill="white"></path>
+</g>
+</svg>
+            </div>
+            <div class="channel-prop-container"
+                 ng-class="{'pull-left': channel.link && channel.label && channel.name == 'Website', 'pull-left mt-101 height-301': channel.link && !channel.label && channel.name == 'Website', 'pt-10': !channel.label}">
+
+                <span ng-if="channel.name == 'Website'">
+                    <span ng-if="channel.label">
+                             <div class="channel-name" ng-class="{'mb-5': channel.label}">
+                            {{channel.label}}
+                            </div>
+                            <div class="channel-label">
+                                {{getChannelNameOrLink(channel)}}
+                            </div>
+                    </span>
+                    <span ng-if="!channel.label">
+                             <div class="channel-name" ng-class="{'mb-5': channel.label}">
+                            {{getChannelNameOrLink(channel)}}
+                            </div>
+                            <div class="channel-label">
+                                {{channel.label}}
+                            </div>
+                    </span>
+                </span>
+                <span ng-if="channel.name != 'Website'">
+                    <div class="channel-name" ng-class="{'mb-5': channel.label}">
+                    {{getChannelNameOrLink(channel)}}
+                    </div>
+                    <div class="channel-label">
+                        {{channel.label}}
+                    </div>
+                </span>
+            </div>
+        </div>
+    </a>
+</div>
+<div class="vcard-row follow-scroll share-container"
+     ng-show="view.sharing">
+    
+<div class="fabs" id="shareFab">
+    <div class="fixed-blur-bgd">
+        <div class="chat">
+            <div class="fab-body">
+                <div class="icon-fab-close"></div>
+                <div class="fab-header"
+                     ng-style="{color: isColorLight(view.code.color2) ? 'black' : view.code.color2}">Share page</div>
+                <ul class="ssk-block ssk-md"
+                    data-url="https://qrco.de/karthikeyan?trackSharing=1"
+                    data-text="">
+                    <li>
+                        <i class="icon-fab-share-facebook"></i>
+                        <a href="#" class="ssk ssk-text ssk-facebook">Facebook</a>
+                    </li>
+                    <li>
+                        <i class="icon-fab-share-x"></i>
+                        <a href="#" class="ssk ssk-text ssk-twitter">X</a>
+                    </li>
+                    <li>
+                        <i class="iconFab icon-fab-share-whatsapp"></i>
+                        <a href="whatsapp://send?text=https://qrco.de/karthikeyan?trackSharing=1" class="ssk ssk-whatsapp">Whatsapp</a>
+                    </li>
+                    <li>
+                        <i class="icon-fab-share-email"></i>
+                        <a href="mailto:?body=https://qrco.de/karthikeyan?trackSharing=1"
+                           target="_blank">Email</a>
+                    </li>
+                    <li>
+                        <i class="icon-fab-share-message"></i>
+                        <input id="shortUrl" value="https://qrco.de/karthikeyan" readonly>
+                        <button id="copyButton">Copy</button>
+                        <div class="ifCopySucceed" ng-show="ifCopySucceed">
+                            Text copied to the clipboard.                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a id="{{!loadDemo ? 'prime' : ''}}" class="fab"
+       ng-style="{background: view.code.color2 || '#ea4b88'}"
+       ng-click="!loadDemo ?  '' : callAction($event,'shareAction')">
+        <span class="hidden-xs" ng-style="{'color': isColorLight(view.code.color2) ? 'black' : 'white'}">
+            <i class="prime icon icon-fab-share"></i>
+            Share this page        </span>
+        <i class="prime icon icon-fab-share visible-xs"
+           ng-style="{'color': isColorLight(view.code.color2) ? 'black' : 'white'}"></i>
+    </a>
+</div></div>
+
+
+<div id="redirectTo">
+    <div class="fixed-blur-bgd">
+        <div class="dialog-container">
+            <div class="fab-body">
+                <div class="event-title">
+                    Continue?                </div>
+                <div class="dialog-body">
+                    You will be directed to another website.                </div>
+                <a class="event-slim-button ripplelink mt-10 pull-right" ng-style="{'color': isColorLight(view.color2) ? 'black' : view.color2}"
+                   ng-click="dialogRedirectCallback(false)">
+                    No                </a>
+                <a class="event-slim-button ripplelink mt-10 pull-right" ng-style="{'color': isColorLight(view.color2) ? 'black' : view.color2}"
+                   ng-click="dialogRedirectCallback(true)">
+                    Yes                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="gotIt">
+    <div class="fixed-blur-bgd">
+        <div class="dialog-container">
+            <div class="fab-body">
+                <div class="event-gotIt-button">
+                </div>
+                <div class="dialog-body pull-left">
+                    {{gotItText}}
+                </div>
+                <a class="text-regular-blue mt-20" ng-click="closeDialog()">
+                    Got it                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="eventOver">
+    <div class="fixed-blur-bgd">
+        <div class="dialog-container">
+            <div class="fab-body">
+                <div class="event-title">
+                    Event has passed                </div>
+                <div class="dialog-body">
+                    Registration and ticket purchases have closed for this event.                </div>
+                <a class="event-slim-button ripplelink mt-10 pull-right" ng-style="{'color': isColorLight(view.color2) ? 'black' : view.color2}"
+                   ng-click="dialogRedirectCallback(true)">
+                    Close                </a>
+            </div>
+        </div>
+    </div>
+</div>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://qrco.de/public/lib/jquery/dist/jquery.min.js?v=80f1804f0133fd04574f54bb834a0e75079aa633"></script>
+<script type="text/javascript" src="https://qrco.de/js/build/angular.rendering.min.js?v=80f1804f0133fd04574f54bb834a0e75079aa633"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+
+
+    /**
+     * Angular connection
+     */
+    app.loadBasePreviewController();
+
+
+    /**
+     * Replace a point with a space character
+     */
+    app.filter('point2space', function () {
+        return function (input) {
+            if (input) {
+                return input.replace(/\./g, ' ');
+            }
+        }
+    });
+
+    /**
+     * Return date in number format '1490189463876'
+     *
+     * @param input - date
+     * */
+    app.filter('toDay', function () {
+        return function (input) {
+            if (input) {
+                var result = new Date(input).getTime();
+                return result || '';
+            } else
+                return '';
+        };
+    });
+
+    /**
+     * Return value with '-' instead of spaces
+     *
+     * @param input - string
+     * */
+    app.filter('dashEncode', function () {
+        return function (input) {
+            if (input) {
+                return input.replace(/ /g, "-");
+            } else
+                return ' ';
+        };
+    });
+
+    /**
+     * Return escape value of param
+     *
+     * @param input - string
+     * */
+    app.filter('escape', function () {
+        return function (input) {
+            if (input) {
+                return escape(input);
+            } else
+                return ' ';
+        };
+    });
+
+    /**
+     * Return icon name based on the channel name
+     * */
+    app.filter('toIconName', function () {
+        return function (input) {
+            if (input) {
+                // Backwards compatibility for existing codes, which were created before Twitter was renamed to X
+                if(input === 'Twitter')
+                    return 'x';
+
+                return input.replace(/\s+/g, '').toLowerCase();
+            } else
+                return ' ';
+        };
+    });
+
+    /**
+     * Return link with the correct prefix
+     * */
+    app.filter('prefixChannel', ['$filter', function ($filter) {
+        return function (input, name) {
+            if (input) {
+                switch (name) {
+                    case ('WhatsApp'):
+                        return 'https://wa.me/' + input.replace(/[\s()]/g, '');
+                        break;
+                    case ('Twitter'):
+                        return $filter('prefixURL')('www.twitter.com/' + input);
+                        break;
+                    case ('X'):
+                        return $filter('prefixURL')('www.twitter.com/' + input);
+                        break;
+                    case ('Instagram'):
+                        return $filter('prefixURL')('www.instagram.com/' + input);
+                        break;
+                    case ('Snapchat'):
+                        return $filter('prefixURL')('www.snapchat.com/add/' + input);
+                        break;
+                    case ('WeChat'):
+                        return 'weixin://dl/chat?' + input;
+                        break;
+                    case ('Skype'):
+                        return 'skype:' + input + '?chat';
+                        break;
+                    case ('Line'):
+                        return $filter('prefixURL')('https://line.me/R/ti/p/~' + input);
+                        break;
+                    default:
+                        return $filter('prefixURL')(input);
+                        break;
+                }
+            } else
+                return ' ';
+        };
+    }]);
+
+    /**
+     * Return domain of input
+     * */
+    app.filter('domain', function () {
+        return function (input) {
+            if (input.indexOf('://') >= 0) {
+                return input.split('https://qrco.de/')[2]
+            }
+            return input.split('https://qrco.de/')[0]
+        };
+    });
+
+    /**
+     * The QR service for the app.
+     * */
+    app.service('qr', function () {
+        /**
+         * Scroll page from buttom to top
+         * */
+        this.scrollFromBottomtoTop = function (loadDemo) {
+            setTimeout(function () {
+                if (loadDemo == true) {
+                    $("html, body").animate({
+                        scrollTop: $('.channel-container:last-child').offset().top
+                    }, 0)
+                    ;$("html, body").animate({
+                        scrollTop: 0
+                    }, 1000);
+                }
+            }, 0)
+        }
+    });
+
+    /**
+     * Directive
+     *
+     * When image is loaded fadeout welcome screen
+     * */
+    app.directive('imageonload', ['qr', function (qr) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.bind('load', function () {
+                    $("#welcomeImg").fadeIn(1000);
+                    window.setTimeout(function () {
+                        $(".loading-welcome.welcome-screen").fadeOut();
+                        scope.welcomeScreenScrollWindow++;
+                        if (scope.welcomeScreenScrollWindow == 1) {
+                            qr.scrollFromBottomtoTop(scope.loadDemo)
+                        }
+                    }, 2000);
+                });
+                element.bind('error', function () {
+                });
+            }
+        };
+    }]);
+    //Override the base preview controller
+    app.controller('ComplexController', function ($scope, $controller, $sce, $rootScope, $filter, previewService, $window) {
+
+            $scope.welcomeScreenScrollWindow = 0;
+            /**
+             * Get channel name from channel item
+             *
+             * @param channel
+             * */
+            $scope.getChannelLink = function (channel) {
+                if (!$scope.loadDemo) {
+                    return $filter('prefixChannel')(channel.link, channel.name);
+                }
+                return '#channel-item-' + channel.name;
+            };
+
+            /**
+             * Get channel name or link to the channel based on channel info
+             *
+             * @param channel
+             * */
+            $scope.getChannelNameOrLink = function (channel) {
+                if (channel.name == 'Website')
+                    if (channel.link) {
+                        return $scope.loadDemo ? channel.link : $filter('domain')(channel.link);
+                    } else {
+                        return channel.name;
+                    } else {
+                    return channel.name;
+                }
+            };
+
+            /**
+             * Set solid background for the header based on the title section height
+             * */
+            $scope.setSolidBgd = function () {
+                if ($scope.view.code) {
+                    var titleSectionHeight = 142;
+                    setTimeout(function () {
+                        if ($scope.view.code.teaser) {
+                            titleSectionHeight = $('.event-content-container').parent().outerHeight() + 60 + 128
+                        }
+                        else
+                            titleSectionHeight = $('.event-content-container').parent().outerHeight() + 60;
+                        $('.solid-bgd').css({
+                            'background-color': $scope.view.code.color1 ? $scope.view.code.color1 : '#447fb6',
+                            'height': !$scope.view.code.avatar ? titleSectionHeight + 'px' : '420px'
+                        })
+                    }, 0);
+                }
+            };
+
+            /**
+             * Open the dialog popup
+             * Event is for getting the current target element
+             * Target:
+             *      - shareAction: Button with got it information
+             *      - channelAction: Button with got it information
+             *
+             * @param event - string
+             * @param target - string
+             * */
+            $scope.callAction = function (event, target) {
+                switch (target) {
+                    case 'shareAction':
+                        if ($scope.loadDemo) {
+                            $scope.gotItText = 'Your contacts can click this button to share your page.';
+                            $scope.toggleDialog('gotIt', $(event.currentTarget));
+                        }
+                        break;
+                    case 'channelAction':
+                        if ($scope.loadDemo) {
+                            $scope.gotItText = 'By tapping here, users are navigated to the linked social media profile or website.';
+                            $scope.toggleDialog('gotIt', $(event.currentTarget));
+                        }
+                        break;
+                }
+            };
+
+
+            /**
+             * Toggle dialog
+             *
+             * @param id - string
+             * @param element - current target
+             * */
+            $scope.toggleDialog = function (id, element) {
+                if (element) {
+                    var elem = element.context.outerHTML;
+                    $('#' + id + ' .dialog-container .event-gotIt-button').html(elem);
+                }
+                $($('#' + id).parent()).toggleClass('fabOnTop');
+                $('#' + id + ' .dialog-container').toggleClass('is-visible');
+                $('#prime.fab').toggleClass('disabledClick');
+                $('#' + id + ' .fixed-blur-bgd').toggle();
+            };
+
+            /**
+             * Callback of the dialog yes/no buttons
+             * Can close the dialog or it can redirect to a url and close the dialog
+             * If the url is not defined it will use the targetUrl from the callAction button
+             *
+             * @param proceed - string
+             * @param url - current target
+             * */
+            $scope.dialogRedirectCallback = function (proceed, url) {
+                if (proceed) {
+                    if (url) {
+                        $window.open(url, '_blank');
+                    } else {
+                        if ($scope.view.code.callToAction.targetUrl.indexOf('http') < 0)
+                            $window.open('//' + $scope.view.code.callToAction.targetUrl, '_blank');
+                        else
+                            $window.open($scope.view.code.callToAction.targetUrl, '_blank');
+                    }
+                    $scope.closeDialog();
+                } else {
+                    $scope.closeDialog();
+                }
+            };
+
+            /**
+             * Close dialog
+             *
+             * */
+            $scope.closeDialog = function () {
+                $('.dialog-container').removeClass('is-visible');
+                $('#prime.fab').toggleClass('disabledClick');
+                $('.event-gotIt-button').html('');
+                $('.fixed-blur-bgd').hide();
+            };
+
+
+            /**
+             * Set position of the fab Button
+             *If we have only one fab you have to use bottom 5px!!! else use 75px as default
+             * @param buttonName - string
+             * */
+            $scope.setPosition = function (buttonName) {
+                if ($(window).innerWidth() < 667) {
+                    var bottom = '5px',
+                        right = '17px';
+                    if (buttonName == 'calendar')
+                        bottom = '5px';
+                    if ($(window).innerWidth() < 321)
+                        right = '-85px';
+                    return {
+                        'position': 'fixed',
+                        'bottom': bottom,
+                        'right': right,
+                        'width': '80px'
+                    }
+                }
+                return '';
+            };
+
+            //Inherrit from basePreviewController
+            angular.extend(this, $controller('BasePreviewController', {$scope: $scope}));
+
+            $scope.loadDemo = parent && typeof parent.ImHere === "function";
+
+            //Get the json data form the file
+            json_data = {"form":[{"section_design":{"fold":true}},{"section_basic_info":{"fold":true}},{"section_media_channels":{"fold":true}},{"section_welcome_screen":{"fold":false}},{"section_advance_options":{"fold":false}}],"code":{"title":"Connect with us on social media","teaser":"Follow us and get updates delivered to your favorite social media channel.","channels":[{"input_prefix_label":"URL","link":"https:\/\/karthikeyan-rathinam.github.io\/profile\/","label":"Visit us online","name":"Website"},{"input_prefix_label":"URL","link":"https:\/\/www.linkedin.com\/in\/karthikeyanrathinam","label":"Let's Connect","name":"LinkedIn"},{"input_prefix_label":"URL","link":"https:\/\/github.com\/karthikeyan-rathinam\/","label":"if you want you it","name":"Github"},{"input_prefix_label":"URL","label":"Watch our videos","name":"YouTube","link":"https:\/\/www.youtube.com\/@linkagethink"},{"input_prefix_label":"URL","link":"https:\/\/karthikeyanrathinam.medium.com\/","label":"Visit My Blogs","name":"Website"},{"input_prefix_label":"URL","link":"https:\/\/developerinfoz.blogspot.com\/","label":"Visit Blogs","name":"Website"},{"input_prefix_label":"URL","link":"https:\/\/aideveloperz.blogspot.com\/","label":"Visit Blogs","name":"Website"}],"color1":"#455a64","color2":"#e91e63","avatar":"","avatar_extra":{"zoom":100,"background":"#ffffff"},"welcome_extra":{"zoom":150,"background":"#ffffff"},"customHeaderImage":{"url":"data:image\/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDY0MCAzNjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDY0MCAzNjAiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8ZyBpZD0iRWJlbmVfMSI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMzg1LjMsMTEwLjNMMzg1LjMsMTEwLjNjMC03LjQsNS42LTEzLjUsMTMuNS0xMy41YzQuOCwwLDcuOSwxLjYsMTAuMyw0LjNsLTQuNSw0LjgKCQkJYy0xLjYtMS43LTMuMy0yLjgtNS45LTIuOGMtMy42LDAtNi4yLDMuMi02LjIsN3YwLjFjMCwzLjksMi41LDcuMSw2LjUsNy4xYzIuNCwwLDQuMS0xLjEsNS45LTIuN2w0LjMsNC4zCgkJCWMtMi41LDIuNy01LjQsNC43LTEwLjUsNC43QzM5MSwxMjMuNiwzODUuMywxMTcuNiwzODUuMywxMTAuM3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNDExLjQsMTEwLjNMNDExLjQsMTEwLjNjMC03LjUsNi0xMy41LDE0LTEzLjVjOCwwLDEzLjksNS45LDEzLjksMTMuM3YwLjFjMCw3LjQtNiwxMy40LTE0LDEzLjQKCQkJQzQxNy4zLDEyMy42LDQxMS40LDExNy43LDQxMS40LDExMC4zeiBNNDMyLDExMC4zTDQzMiwxMTAuM2MwLTMuOS0yLjctNy4yLTYuOC03LjJjLTQuMiwwLTYuNywzLjItNi43LDd2MC4xCgkJCWMwLDMuOCwyLjcsNy4xLDYuOCw3LjFDNDI5LjUsMTE3LjMsNDMyLDExNC4xLDQzMiwxMTAuM3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNDQ0LjIsOTcuM2g3LjN2My42YzEuNy0yLjIsMy44LTQuMSw3LjUtNC4xYzUuNSwwLDguNywzLjYsOC43LDkuNlYxMjNoLTcuM3YtMTQuNGMwLTMuNS0xLjYtNS4yLTQuNC01LjIKCQkJYy0yLjgsMC00LjYsMS44LTQuNiw1LjJWMTIzaC03LjNWOTcuM3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNDc0LDk3LjNoNy4zdjMuNmMxLjctMi4yLDMuOC00LjEsNy41LTQuMWM1LjUsMCw4LjcsMy42LDguNyw5LjZWMTIzaC03LjN2LTE0LjRjMC0zLjUtMS42LTUuMi00LjQtNS4yCgkJCWMtMi44LDAtNC42LDEuOC00LjYsNS4yVjEyM0g0NzRWOTcuM3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTAyLjUsMTEwLjNMNTAyLjUsMTEwLjNjMC03LjQsNS4yLTEzLjUsMTIuNy0xMy41YzguNiwwLDEyLjUsNi43LDEyLjUsMTRjMCwwLjYsMCwxLjItMC4xLDEuOWgtMTcuOQoJCQljMC43LDMuMywzLDUsNi4zLDVjMi40LDAsNC4yLTAuOCw2LjItMi42bDQuMiwzLjdjLTIuNCwzLTUuOSw0LjgtMTAuNSw0LjhDNTA4LjIsMTIzLjYsNTAyLjUsMTE4LjIsNTAyLjUsMTEwLjN6IE01MjAuNiwxMDguMQoJCQljLTAuNC0zLjMtMi40LTUuNS01LjQtNS41Yy0zLDAtNSwyLjItNS42LDUuNUg1MjAuNnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTMxLjQsMTEwLjNMNTMxLjQsMTEwLjNjMC03LjQsNS42LTEzLjUsMTMuNS0xMy41YzQuOCwwLDcuOSwxLjYsMTAuMyw0LjNsLTQuNSw0LjgKCQkJYy0xLjYtMS43LTMuMy0yLjgtNS45LTIuOGMtMy42LDAtNi4yLDMuMi02LjIsN3YwLjFjMCwzLjksMi41LDcuMSw2LjUsNy4xYzIuNCwwLDQuMS0xLjEsNS45LTIuN2w0LjMsNC4zCgkJCWMtMi41LDIuNy01LjQsNC43LTEwLjUsNC43QzUzNy4xLDEyMy42LDUzMS40LDExNy42LDUzMS40LDExMC4zeiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01NjEuMiwxMTUuN3YtMTIuMmgtMy4xdi02LjJoMy4xdi02LjZoNy4zdjYuNmg2djYuMmgtNnYxMWMwLDEuNywwLjcsMi41LDIuNCwyLjVjMS4zLDAsMi41LTAuMywzLjYtMC45CgkJCXY1LjljLTEuNSwwLjktMy4zLDEuNS01LjgsMS41QzU2NC4zLDEyMy40LDU2MS4yLDEyMS43LDU2MS4yLDExNS43eiIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTc1LjIsODUuOWwwLjQsMi4xTDcxLDg4LjhsLTMuOC0yMS42bDQuNS0wLjhsMS40LDhjMC44LTEuNywyLjEtMyw0LjUtMy40YzMuNy0wLjcsNy43LDEuNiw4LjcsNi45bDAsMC4xCgkJCWMwLjksNS4zLTIsOC44LTUuOCw5LjVDNzguMSw4Ny44LDc2LjUsODcsNzUuMiw4NS45eiBNODEuOCw3OC43TDgxLjgsNzguN2MtMC41LTIuNy0yLjYtNC4xLTQuNy0zLjhjLTIuMSwwLjQtMy41LDIuNC0zLjEsNQoJCQlsMCwwLjFjMC41LDIuNiwyLjUsNC4xLDQuNiwzLjdTODIuMyw4MS40LDgxLjgsNzguN3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNODguOCw3Ny41TDg4LjgsNzcuNWMtMC44LTQuNiwxLjgtOC45LDYuNC05LjdjNS4zLTAuOSw4LjQsMi43LDkuMiw3LjJjMC4xLDAuNCwwLjEsMC44LDAuMSwxLjJsLTExLDEuOQoJCQljMC44LDIsMi40LDIuOCw0LjQsMi40YzEuNS0wLjMsMi41LTAuOSwzLjYtMi4zbDMsMS44Yy0xLjIsMi4xLTMuMSwzLjYtNS45LDQuMUM5My44LDg1LjEsODkuNiw4Mi40LDg4LjgsNzcuNXogTTk5LjcsNzQuMwoJCQljLTAuNi0yLTItMy4xLTMuOS0yLjhjLTEuOSwwLjMtMi44LDEuOS0yLjgsNEw5OS43LDc0LjN6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTEwNi44LDc0LjRMMTA2LjgsNzQuNGMtMC44LTQuNiwyLTguOSw2LjgtOS44YzMtMC41LDUsMC4yLDYuOCwxLjVsLTIuMiwzLjRjLTEuMi0wLjktMi4zLTEuNC0zLjktMS4xCgkJCWMtMi4yLDAuNC0zLjUsMi43LTMuMSw1bDAsMC4xYzAuNCwyLjQsMi4zLDQuMSw0LjgsMy43YzEuNS0wLjMsMi40LTEuMSwzLjMtMi4zbDMuMSwyLjJjLTEuMiwyLTIuOCwzLjUtNiw0CgkJCUMxMTEuNyw4MS45LDEwNy42LDc4LjksMTA2LjgsNzQuNHoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMTIzLDcxLjVMMTIzLDcxLjVjLTAuOC00LjYsMi4yLTguOSw3LjEtOS44YzQuOS0wLjksOS4yLDIuMSwxMCw2LjdsMCwwLjFjMC44LDQuNS0yLjIsOC45LTcuMSw5LjgKCQkJQzEyOC4xLDc5LjEsMTIzLjgsNzYuMSwxMjMsNzEuNXogTTEzNS43LDY5LjNMMTM1LjcsNjkuM2MtMC40LTIuNC0yLjUtNC4xLTQuOS0zLjdjLTIuNiwwLjUtMy44LDIuNy0zLjMsNWwwLDAuMQoJCQljMC40LDIuMywyLjUsNC4xLDQuOSwzLjZDMTM0LjksNzMuOSwxMzYuMSw3MS42LDEzNS43LDY5LjN6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTE0MS45LDU5LjlsNC41LTAuOGwwLjQsMi4yYzAuOC0xLjUsMS45LTMsNC4yLTMuNGMyLjEtMC40LDMuOCwwLjMsNC45LDEuN2MxLjEtMS45LDIuNi0zLDQuOC0zLjQKCQkJYzMuMy0wLjYsNS43LDEuMSw2LjQsNC45bDEuOCwxMC4zbC00LjUsMC44bC0xLjYtOC44Yy0wLjQtMi4xLTEuNS0zLjEtMy4yLTIuOGMtMS43LDAuMy0yLjUsMS42LTIuMiwzLjdsMS42LDguOGwtNC41LDAuOAoJCQlsLTEuNi04LjhjLTAuNC0yLjEtMS41LTMuMS0zLjItMi44Yy0xLjcsMC4zLTIuNSwxLjYtMi4yLDMuN2wxLjYsOC44bC00LjUsMC44TDE0MS45LDU5Ljl6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTE3MC43LDYzLjFMMTcwLjcsNjMuMWMtMC44LTQuNiwxLjgtOC45LDYuNC05LjdjNS4zLTAuOSw4LjQsMi43LDkuMiw3LjJjMC4xLDAuNCwwLjEsMC44LDAuMiwxLjIKCQkJbC0xMSwxLjljMC44LDIsMi40LDIuOCw0LjQsMi40YzEuNS0wLjMsMi41LTAuOSwzLjYtMi4zbDMsMS44Yy0xLjIsMi4xLTMuMSwzLjYtNiw0LjFDMTc1LjcsNzAuNywxNzEuNiw2OCwxNzAuNyw2My4xegoJCQkgTTE4MS42LDU5LjhjLTAuNi0yLTItMy4xLTMuOS0yLjhjLTEuOSwwLjMtMi44LDEuOS0yLjgsNEwxODEuNiw1OS44eiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0xOTguMSw2MS43TDE5OC4xLDYxLjdjLTAuNi0zLjUsMS43LTUuNiw1LjUtNi4yYzEuNi0wLjMsMi44LTAuMiw0LDBsMC0wLjNjLTAuMy0xLjktMS43LTIuNy0zLjktMi4zCgkJCWMtMS43LDAuMy0yLjksMC44LTQuMiwxLjZsLTEuNy0zLjJjMS42LTEuMSwzLjItMS45LDUuOS0yLjRjMi41LTAuNCw0LjMtMC4xLDUuNywwLjhjMS40LDEsMi4yLDIuNiwyLjYsNC44bDEuNiw5LjJsLTQuMywwLjgKCQkJbC0wLjMtMS43Yy0wLjksMS40LTIuMiwyLjUtNC40LDIuOUMyMDEuNCw2Ni4xLDE5OC42LDY0LjgsMTk4LjEsNjEuN3ogTTIwOC4yLDU4LjhsLTAuMS0wLjhjLTAuOC0wLjItMS45LTAuMy0zLTAuMQoJCQljLTEuOSwwLjMtMywxLjMtMi43LDIuN2wwLDAuMWMwLjIsMS4yLDEuMywxLjcsMi44LDEuNUMyMDcuMyw2MS44LDIwOC41LDYwLjQsMjA4LjIsNTguOHoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMjI0LjgsNDkuM2wtMS45LDAuM2wtMC43LTMuN2wxLjktMC4zbC0wLjItMWMtMC4zLTEuNy0wLjEtMy4xLDAuNi00LjFjMC43LTEsMS44LTEuNiwzLjQtMS45CgkJCWMxLjQtMC4yLDIuNC0wLjIsMy4zLTAuMWwwLjcsMy43Yy0wLjctMC4xLTEuMy0wLjItMi4xLDBjLTEsMC4yLTEuNSwwLjgtMS4zLDJsMC4xLDAuNmwzLjYtMC42bDAuNiwzLjdsLTMuNiwwLjZsMi4xLDEybC00LjUsMC44CgkJCUwyMjQuOCw0OS4zeiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0yMzUuMyw1NS4xTDIzNS4zLDU1LjFjLTAuNi0zLjUsMS43LTUuNiw1LjUtNi4yYzEuNi0wLjMsMi44LTAuMiw0LDBsMC0wLjNjLTAuMy0xLjktMS43LTIuNy0zLjktMi4zCgkJCWMtMS43LDAuMy0yLjksMC44LTQuMiwxLjZsLTEuNy0zLjJjMS42LTEuMSwzLjItMS45LDUuOS0yLjRjMi41LTAuNCw0LjMtMC4xLDUuNywwLjhjMS40LDEsMi4yLDIuNiwyLjYsNC44bDEuNiw5LjJsLTQuMywwLjgKCQkJbC0wLjMtMS43Yy0wLjksMS40LTIuMiwyLjUtNC40LDIuOUMyMzguNiw1OS41LDIzNS45LDU4LjIsMjM1LjMsNTUuMXogTTI0NS40LDUyLjJsLTAuMS0wLjhjLTAuOC0wLjItMS45LTAuMy0zLTAuMQoJCQljLTEuOSwwLjMtMywxLjMtMi43LDIuN2wwLDAuMWMwLjIsMS4yLDEuMywxLjcsMi44LDEuNUMyNDQuNSw1NS4zLDI0NS43LDUzLjksMjQ1LjQsNTIuMnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMjUxLjgsNDAuNWw0LjUtMC44bDAuNCwyLjJjMC44LTEuNSwxLjktMyw0LjItMy40YzMuNC0wLjYsNS44LDEuMyw2LjQsNC45bDEuOCwxMC4zbC00LjUsMC44bC0xLjYtOC44CgkJCWMtMC40LTIuMS0xLjYtMy0zLjMtMi43Yy0xLjcsMC4zLTIuNiwxLjYtMi4yLDMuN2wxLjYsOC44bC00LjUsMC44TDI1MS44LDQwLjV6Ii8+Cgk8L2c+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMTAzLjUsMTgzLjlsLTMuOS0wLjhsMS43LTcuOGwzLjksMC44bDAuNS0yLjFjMC44LTMuNywyLjMtNi4yLDQuNC03LjZzNC45LTEuNyw4LjMtMQoJCQljMywwLjYsNC45LDEuNCw2LjYsMi40bC0xLjcsNy45Yy0xLjMtMC44LTIuNS0xLjQtNC4xLTEuN2MtMi4yLTAuNS0zLjcsMC40LTQuMiwyLjlsLTAuMywxLjNsNy43LDEuNmwtMS43LDcuOGwtNy42LTEuNgoJCQlsLTUuNCwyNS40bC05LjUtMkwxMDMuNSwxODMuOXoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMTIxLjIsMTk2LjlsMC0wLjFjMi05LjYsMTEuNS0xNS44LDIxLjktMTMuNmMxMC40LDIuMiwxNi41LDExLjUsMTQuNCwyMS4ybDAsMC4xCgkJCWMtMiw5LjYtMTEuNSwxNS44LTIxLjksMTMuNkMxMjUuMiwyMTUuOSwxMTkuMiwyMDYuNSwxMjEuMiwxOTYuOXogTTE0OC4xLDIwMi42bDAtMC4xYzEuMS00LjktMS42LTEwLTYuOS0xMS4xCgkJCWMtNS40LTEuMi05LjYsMi4zLTEwLjYsNy4zbDAsMC4xYy0xLjEsNC45LDEuNiwxMCw2LjksMTEuMUMxNDIuOSwyMTEuMSwxNDcuMSwyMDcuNiwxNDguMSwyMDIuNnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMTcwLjIsMTc2LjlsOS41LDJsLTkuNyw0NS43bC05LjUtMkwxNzAuMiwxNzYuOXoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMTg4LjEsMTgwLjdsOS41LDJsLTkuNyw0NS43bC05LjUtMkwxODguMSwxODAuN3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMTk3LjgsMjEzLjJsMC0wLjFjMi05LjYsMTEuNS0xNS44LDIxLjktMTMuNmMxMC40LDIuMiwxNi41LDExLjUsMTQuNCwyMS4ybDAsMC4xCgkJCWMtMiw5LjYtMTEuNSwxNS44LTIxLjksMTMuNkMyMDEuOCwyMzIuMiwxOTUuNywyMjIuOCwxOTcuOCwyMTMuMnogTTIyNC43LDIxOC45bDAtMC4xYzEuMS00LjktMS42LTEwLTYuOS0xMS4xCgkJCWMtNS40LTEuMi05LjYsMi4zLTEwLjYsNy4zbDAsMC4xYy0xLjEsNC45LDEuNiwxMCw2LjksMTEuMUMyMTkuNSwyMjcuMywyMjMuNywyMjMuOCwyMjQuNywyMTguOXoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMjM5LjgsMjA0LjRsOS42LDJsMS4xLDIxLjVsMTAuNy0xOS4xbDguMiwxLjdsMiwyMS45bDkuOC0xOS4ybDkuNSwybC0xNy42LDMxLjZsLTguNi0xLjhsLTIuMS0yMgoJCQlsLTExLDE5LjJsLTguNS0xLjhMMjM5LjgsMjA0LjR6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTMxMC40LDI0Mi4xbDQuNi0yMS43bDkuNSwybC00LDE4LjdjLTEsNC41LDAuNyw3LjMsNC4zLDhjMy42LDAuOCw2LjQtMS4xLDcuNC01LjZsNC0xOC43bDkuNSwyCgkJCWwtNy4xLDMzLjZsLTkuNS0ybDEtNC44Yy0yLjgsMi40LTYuMiw0LjMtMTEsMy4zQzMxMS45LDI1NS40LDMwOC44LDI0OS44LDMxMC40LDI0Mi4xeiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0zNDUsMjU3LjJsNS40LTUuNGMzLjEsMy40LDYuNiw1LjYsOS43LDYuM2MyLjgsMC42LDQuMi0wLjIsNC41LTEuN2wwLTAuMWMwLjQtMi4xLTIuNy0zLjQtNi4xLTUuNAoJCQljLTQuNC0yLjQtOS4zLTUuNy03LjktMTIuMmwwLTAuMWMxLjUtNi44LDcuOC05LjUsMTQuNS04YzQuMywwLjksOC42LDMuMywxMS43LDYuNWwtNSw1LjhjLTIuOS0yLjYtNi00LjUtOC40LTUuMQoJCQljLTIuMy0wLjUtMy43LDAuMy00LDEuNmwwLDAuMWMtMC40LDEuOSwyLjYsMy40LDYsNS41YzQuNCwyLjYsOS4zLDYsOCwxMi4xbDAsMC4xYy0xLjYsNy40LTcuOSw5LjYtMTUuMSw4LjEKCQkJQzM1My43LDI2NC4zLDM0OC43LDI2MS42LDM0NSwyNTcuMnoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01MTkuOSwyNDQuMWwxLjctMy45YzIuMywxLjIsNC42LDEuNiw2LjQsMS4zYzEuNi0wLjIsMi4yLTAuOSwyLjEtMS44bDAtMC4xYy0wLjItMS4yLTIuMS0xLjMtNC4zLTEuNgoJCQljLTIuOC0wLjQtNi0xLjEtNi42LTQuOGwwLTAuMWMtMC42LTMuOSwyLjItNi41LDYtNy4xYzIuNC0wLjQsNS4yLDAsNy41LDEuMWwtMS41LDQuMWMtMi4xLTAuOC00LTEuMi01LjQtMQoJCQljLTEuMywwLjItMS45LDAuOS0xLjgsMS42bDAsMC4xYzAuMiwxLjEsMi4xLDEuMyw0LjIsMS43YzIuOCwwLjUsNi4xLDEuMyw2LjcsNC43bDAsMC4xYzAuNyw0LjItMi4yLDYuNy02LjMsNy4zCgkJCUM1MjUuOCwyNDYuMSw1MjIuNywyNDUuNyw1MTkuOSwyNDQuMXoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTM1LjUsMjE3LjZsNS40LTAuOWwxLjUsOS42YzEtMS44LDIuNC0zLjUsNS4xLTMuOWM0LjEtMC42LDYuOSwxLjcsNy42LDZsMiwxMi4zbC01LjQsMC45bC0xLjctMTAuNgoJCQljLTAuNC0yLjYtMS44LTMuNy0zLjktMy40Yy0yLjEsMC4zLTMuMiwxLjktMi44LDQuNGwxLjcsMTAuNmwtNS40LDAuOUw1MzUuNSwyMTcuNnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTU5LjYsMjM0LjhMNTU5LjYsMjM0LjhjLTAuNy00LjIsMi4yLTYuNyw2LjctNy40YzEuOS0wLjMsMy40LTAuMiw0LjgsMGwtMC4xLTAuMwoJCQljLTAuNC0yLjItMS45LTMuMy00LjYtMi44Yy0yLjEsMC4zLTMuNSwwLjktNS4xLDEuOWwtMi0zLjljMi0xLjMsMy45LTIuMiw3LjItMi43YzMtMC41LDUuMiwwLDYuOCwxLjFjMS42LDEuMiwyLjYsMy4yLDMsNS44CgkJCWwxLjgsMTEuMWwtNS4yLDAuOGwtMC4zLTIuMWMtMS4xLDEuNy0yLjcsMi45LTUuNCwzLjNDNTYzLjUsMjQwLjEsNTYwLjIsMjM4LjUsNTU5LjYsMjM0Ljh6IE01NzEuOSwyMzEuNmwtMC4yLTEKCQkJYy0xLTAuMy0yLjItMC40LTMuNi0wLjJjLTIuMywwLjQtMy42LDEuNS0zLjMsMy4ybDAsMC4xYzAuMiwxLjUsMS42LDIuMSwzLjMsMS44QzU3MC43LDIzNS4yLDU3Mi4yLDIzMy41LDU3MS45LDIzMS42eiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01NzkuNywyMTcuN2w1LjQtMC45bDAuNiwzLjhjMC43LTIuOCwyLjItNC44LDUuNC01LjJsMC45LDUuN2wtMC4zLDBjLTMuNiwwLjYtNS41LDMuMS00LjcsNy42bDEuMSw3CgkJCWwtNS40LDAuOUw1NzkuNywyMTcuN3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTk0LjgsMjI1LjFMNTk0LjgsMjI1LjFjLTAuOS01LjUsMi4zLTEwLjYsNy44LTExLjVjNi40LTEsMTAuMSwzLjUsMTAuOSw4LjljMC4xLDAuNCwwLjEsMC45LDAuMiwxLjQKCQkJbC0xMy4zLDIuMWMwLjksMi40LDIuOCwzLjQsNS4yLDNjMS44LTAuMywzLTEuMSw0LjMtMi43bDMuNSwyLjJjLTEuNCwyLjUtMy44LDQuMi03LjIsNC44QzYwMC42LDIzNC4zLDU5NS44LDIzMSw1OTQuOCwyMjUuMXoKCQkJIE02MDgsMjIxLjRjLTAuNy0yLjQtMi40LTMuOC00LjctMy40Yy0yLjIsMC40LTMuNCwyLjItMy41LDQuN0w2MDgsMjIxLjR6Ii8+Cgk8L2c+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMjc2LjcsMzEwLjdsMS4zLTEuN2MxLDAuOCwyLjEsMS4zLDMsMS40YzAuOCwwLjEsMS4yLTAuMiwxLjItMC42bDAsMGMwLTAuNi0wLjktMC45LTEuOS0xLjMKCQkJYy0xLjMtMC41LTIuOC0xLjItMi43LTMuMWwwLDBjMC4xLTIsMS44LTIuOSwzLjctMi44YzEuMiwwLjEsMi41LDAuNiwzLjUsMS40bC0xLjIsMS44Yy0wLjktMC42LTEuOC0xLTIuNS0xLjEKCQkJYy0wLjcsMC0xLDAuMi0xLjEsMC42bDAsMGMwLDAuNSwwLjksMC45LDEuOSwxLjNjMS4zLDAuNSwyLjgsMS4zLDIuNywzLjFsMCwwYy0wLjIsMi4xLTEuOCwzLTMuOSwyLjgKCQkJQzI3OS4zLDMxMi4zLDI3Ny45LDMxMS44LDI3Ni43LDMxMC43eiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0yODYuNiwzMDkuMmwwLjQtNi4ybDIuNywwLjJsLTAuNCw1LjRjLTAuMSwxLjMsMC41LDIsMS41LDIuMWMxLDAuMSwxLjgtMC41LDEuOC0xLjhsMC40LTUuNGwyLjcsMC4yCgkJCWwtMC43LDkuNmwtMi43LTAuMmwwLjEtMS40Yy0wLjcsMC44LTEuNSwxLjQtMi45LDEuM0MyODcuNSwzMTIuOSwyODYuNCwzMTEuNSwyODYuNiwzMDkuMnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMzAwLjUsMzEyLjRsLTAuMSwxLjNsLTIuNy0wLjJsMC45LTEzLjFsMi43LDAuMmwtMC4zLDQuOWMwLjctMC45LDEuNy0xLjQsMy4xLTEuM2MyLjIsMC4yLDQuMywyLjEsNCw1LjMKCQkJbDAsMGMtMC4yLDMuMi0yLjUsNC44LTQuNyw0LjdDMzAxLjksMzEzLjksMzAxLjEsMzEzLjIsMzAwLjUsMzEyLjR6IE0zMDUuNCwzMDkuMkwzMDUuNCwzMDkuMmMwLjEtMS42LTAuOS0yLjgtMi4yLTIuOQoJCQljLTEuMy0wLjEtMi40LDAuOS0yLjUsMi41bDAsMGMtMC4xLDEuNiwwLjksMi43LDIuMSwyLjhDMzA0LjEsMzExLjgsMzA1LjMsMzEwLjgsMzA1LjQsMzA5LjJ6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTMwOS4xLDMxM2wxLjMtMS43YzEsMC44LDIuMSwxLjMsMywxLjRjMC44LDAuMSwxLjItMC4yLDEuMi0wLjZsMCwwYzAtMC42LTAuOS0wLjktMS45LTEuMwoJCQljLTEuMy0wLjUtMi44LTEuMi0yLjctMy4xbDAsMGMwLjEtMiwxLjgtMi45LDMuNy0yLjhjMS4yLDAuMSwyLjUsMC42LDMuNSwxLjRsLTEuMiwxLjhjLTAuOS0wLjYtMS44LTEtMi41LTEuMQoJCQljLTAuNywwLTEsMC4yLTEuMSwwLjZsMCwwYzAsMC41LDAuOSwwLjksMS45LDEuM2MxLjMsMC41LDIuOCwxLjMsMi43LDMuMWwwLDBjLTAuMiwyLjEtMS44LDMtMy45LDIuOAoJCQlDMzExLjgsMzE0LjYsMzEwLjMsMzE0LjEsMzA5LjEsMzEzeiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0zMTguNiwzMTAuMkwzMTguNiwzMTAuMmMwLjItMi44LDIuNS00LjksNS40LTQuN2MxLjgsMC4xLDIuOSwwLjgsMy43LDEuOWwtMS44LDEuNwoJCQljLTAuNi0wLjctMS4xLTEuMS0yLjEtMS4yYy0xLjQtMC4xLTIuNCwxLTIuNSwyLjVsMCwwYy0wLjEsMS41LDAuOCwyLjcsMi4zLDIuOGMwLjksMC4xLDEuNi0wLjMsMi4zLTAuOWwxLjUsMS43CgkJCWMtMSwxLTIuMSwxLjYtNC4xLDEuNUMzMjAuNCwzMTUuMywzMTguNCwzMTIuOSwzMTguNiwzMTAuMnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMzI5LjYsMzA2LjFsMi43LDAuMmwtMC4xLDEuOWMwLjctMS4zLDEuNi0yLjEsMy4yLTEuOWwtMC4yLDIuOWwtMC4xLDBjLTEuOC0wLjEtMywwLjktMy4yLDMuMmwtMC4zLDMuNgoJCQlsLTIuNy0wLjJMMzI5LjYsMzA2LjF6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTMzNywzMDYuNmwyLjcsMC4ybC0wLjcsOS42bC0yLjctMC4yTDMzNywzMDYuNnogTTMzNy4yLDMwMy4xbDIuOSwwLjJsLTAuMiwyLjRsLTIuOS0wLjJMMzM3LjIsMzAzLjF6Ii8+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTM0NC41LDMxNS41bC0wLjEsMS4zbC0yLjctMC4ybDAuOS0xMy4xbDIuNywwLjJsLTAuMyw0LjljMC43LTAuOCwxLjctMS40LDMuMS0xLjNjMi4yLDAuMiw0LjMsMi4xLDQsNS4zCgkJCWwwLDBjLTAuMiwzLjItMi41LDQuOC00LjcsNC43QzM0NS45LDMxNy4xLDM0NS4xLDMxNi40LDM0NC41LDMxNS41eiBNMzQ5LjQsMzEyLjNMMzQ5LjQsMzEyLjNjMC4xLTEuNi0wLjktMi44LTIuMi0yLjkKCQkJcy0yLjQsMC45LTIuNSwyLjVsMCwwYy0wLjEsMS42LDAuOSwyLjcsMi4xLDIuOEMzNDguMSwzMTQuOSwzNDkuMywzMTMuOSwzNDkuNCwzMTIuM3oiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMzUzLjcsMzEyLjdMMzUzLjcsMzEyLjdjMC4yLTIuOCwyLjMtNC45LDUuMS00LjdjMy4yLDAuMiw0LjUsMi44LDQuMyw1LjZjMCwwLjItMC4xLDAuNS0wLjEsMC43CgkJCWwtNi43LTAuNWMwLjIsMS4zLDEsMiwyLjIsMi4xYzAuOSwwLjEsMS42LTAuMiwyLjQtMC44bDEuNSwxLjVjLTEsMS0yLjMsMS42LTQuMSwxLjVDMzU1LjUsMzE3LjgsMzUzLjUsMzE1LjYsMzUzLjcsMzEyLjd6CgkJCSBNMzYwLjUsMzEyLjRjLTAuMS0xLjItMC43LTIuMS0xLjktMi4yYy0xLjEtMC4xLTEuOSwwLjctMi4yLDEuOUwzNjAuNSwzMTIuNHoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik00ODIsNDQuOEw0ODIsNDQuOGMtMC42LTQsMS45LTcuNyw2LjEtOC4zYzIuNS0wLjQsNC4xLDAsNS43LDFsLTEuNiwyLjZjLTEuMi0wLjctMi4yLTEuMS0zLjgtMC44CgkJCWMtMi4yLDAuNC0zLjcsMi42LTMuMyw0LjlsMCwwYzAuNCwyLjUsMi40LDQuMSw0LjksMy43YzEuMS0wLjIsMi4xLTAuNiwyLjctMS4zbC0wLjMtMmwtMy4xLDAuNWwtMC40LTIuNmw2LTFsMSw2CgkJCWMtMS4yLDEuNC0zLDIuNy01LjYsMy4xQzQ4Ni4xLDUxLjQsNDgyLjYsNDguOSw0ODIsNDQuOHoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNDk3LjMsMzUuMmwzLTAuNWwyLjIsMTMuOGwtMywwLjVMNDk3LjMsMzUuMnoiLz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTAzLjgsMzQuMmwxMC41LTEuN2wwLjQsMi44bC03LjUsMS4ybDAuNSwyLjlsNi42LTFsMC40LDIuOGwtNi42LDFsMC44LDUuNGwtMywwLjVMNTAzLjgsMzQuMnoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01Mi4zLDI2OC4ybDMuOS0wLjZsMC4zLDJjMC43LTEuMywxLjctMi41LDMuNy0yLjhjMy0wLjUsNSwxLjIsNS41LDQuNGwxLjQsOC45bC0zLjksMC42bC0xLjItNy43CgkJCWMtMC4zLTEuOC0xLjMtMi43LTIuOC0yLjRzLTIuMywxLjMtMiwzLjJsMS4yLDcuN2wtMy45LDAuNkw1Mi4zLDI2OC4yeiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik02OC44LDI3Mi43TDY4LjgsMjcyLjdjLTAuNi00LDEuNy03LjcsNS43LTguM2M0LjYtMC43LDcuMywyLjUsNy45LDYuNGMwLDAuMywwLjEsMC43LDAuMSwxbC05LjYsMS41CgkJCWMwLjcsMS43LDIsMi40LDMuOCwyLjJjMS4zLTAuMiwyLjItMC44LDMuMS0xLjlsMi41LDEuNmMtMSwxLjgtMi43LDMuMS01LjIsMy41QzczLDI3OS4zLDY5LjQsMjc2LjksNjguOCwyNzIuN3ogTTc4LjMsMjcwCgkJCWMtMC41LTEuNy0xLjctMi43LTMuNC0yLjVjLTEuNiwwLjMtMi41LDEuNi0yLjUsMy40TDc4LjMsMjcweiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik04Mi40LDI2My40bDQtMC42bDMuNSw4bDEuMy04LjhsMy40LTAuNWw0LDhsMC45LTguN2wzLjktMC42bC0yLjEsMTQuNWwtMy41LDAuNmwtNC04bC0xLjQsOC45bC0zLjUsMC42CgkJCUw4Mi40LDI2My40eiIvPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0xMDYuMSwyNzEuOWwxLjMtMi44YzEuNywwLjgsMy4zLDEuMiw0LjYsMWMxLjEtMC4yLDEuNi0wLjcsMS41LTEuM2wwLTAuMWMtMC4xLTAuOC0xLjUtMC45LTMuMS0xLjEKCQkJYy0yLTAuMy00LjMtMC44LTQuOC0zLjVsMC0wLjFjLTAuNC0yLjgsMS42LTQuNyw0LjMtNS4yYzEuNy0wLjMsMy43LDAsNS40LDAuOGwtMS4xLDIuOWMtMS41LTAuNi0yLjktMC45LTMuOS0wLjcKCQkJYy0xLDAuMi0xLjQsMC42LTEuMywxLjJsMCwwLjFjMC4xLDAuOCwxLjUsMC45LDMuMSwxLjJjMiwwLjMsNC40LDAuOSw0LjgsMy40bDAsMC4xYzAuNSwzLjEtMS42LDQuOC00LjYsNS4zCgkJCUMxMTAuNCwyNzMuNCwxMDguMSwyNzMuMSwxMDYuMSwyNzEuOXoiLz4KCTwvZz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMjkuNywyMDMuMmwtMC44LTIuOWwxLjktMC41bDAuOCwyLjlsMi45LTAuOGwwLjUsMS45bC0yLjksMC44bDAuOCwyLjlsLTEuOSwwLjVsLTAuOC0yLjlsLTIuOSwwLjgKCQkJCWwtMC41LTEuOUwyOS43LDIwMy4yeiBNMzQuMSwyMDguM2wtMC44LTIuOWwyLjktMC44bC0wLjgtMi45bDYuOC0xLjhsMi4zLDEuNWwzLjEtMC44YzEuMS0wLjMsMi4yLDAuNCwyLjQsMS40bDMuMSwxMS42CgkJCQljMC4zLDEuMS0wLjQsMi4yLTEuNCwyLjRsLTE1LjUsNC4xYy0xLjEsMC4zLTIuMi0wLjQtMi40LTEuNGwtMi42LTkuN0wzNC4xLDIwOC4zeiBNNDMuMiwyMTUuMWMyLjctMC43LDQuMi0zLjUsMy41LTYuMQoJCQkJcy0zLjUtNC4yLTYuMS0zLjVjLTIuNywwLjctNC4yLDMuNS0zLjUsNi4xQzM3LjgsMjE0LjMsNDAuNiwyMTUuOSw0My4yLDIxNS4xeiBNMzguOCwyMTEuMWMwLjUsMS43LDIuMiwyLjcsMy45LDIuMwoJCQkJYzEuNy0wLjUsMi43LTIuMiwyLjMtMy45Yy0wLjUtMS43LTIuMi0yLjctMy45LTIuM0MzOS40LDIwNy43LDM4LjQsMjA5LjQsMzguOCwyMTEuMXoiLz4KCQk8L2c+Cgk8L2c+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNTAyLjQsMTYwLjFsLTIyLjgsNy40Yy0xLjYsMC41LTIuNCwyLjItMS45LDMuOGw4LjMsMjUuN2wzLjktNy42bDIwLTYuNWMxLjYtMC41LDIuNC0yLjIsMS45LTMuOAoJCQlsLTUuNi0xNy4xQzUwNS43LDE2MC40LDUwNCwxNTkuNiw1MDIuNCwxNjAuMXoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01ODksNjMuNWwxMC40LDYuM2MxLjUsMC45LDMuNC0wLjQsMy0yLjJsLTIuNy0xMS44Yy0wLjItMC43LDAuMS0xLjUsMC42LTJsOS4yLTcuOQoJCQljMS4zLTEuMiwwLjYtMy40LTEuMS0zLjVsLTEyLTFjLTAuNy0wLjEtMS40LTAuNS0xLjctMS4ybC00LjctMTEuMWMtMC43LTEuNi0zLTEuNi0zLjcsMGwtNC43LDExLjFjLTAuMywwLjctMC45LDEuMS0xLjcsMS4yCgkJCWwtMTIsMWMtMS44LDAuMS0yLjUsMi4zLTEuMSwzLjVsOS4yLDcuOWMwLjYsMC41LDAuOCwxLjIsMC42LDJsLTIuNywxMS44Yy0wLjQsMS43LDEuNSwzLjEsMywyLjJsMTAuNC02LjMKCQkJQzU4Ny42LDYzLjIsNTg4LjQsNjMuMiw1ODksNjMuNXoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0zMS42LDMxMS42YzEuOC0xLjgsNC42LTEuOCw2LjQsMGw0LjEsNC4xbDItMmwtNC4xLTQuMWMtMi45LTIuOS03LjUtMi45LTEwLjQsMGMtMi45LDIuOS0yLjksNy41LDAsMTAuNAoJCQlsNC4xLDQuMWwyLTJsLTQuMS00LjFDMjkuOCwzMTYuMywyOS44LDMxMy40LDMxLjYsMzExLjZ6IE0zNC44LDMxNi45bDguMyw4LjNsMi4xLTIuMWwtOC4zLTguM0wzNC44LDMxNi45eiBNNTAuNCwzMjBsLTQuMS00LjEKCQkJbC0yLDJsNC4xLDQuMWMxLjgsMS44LDEuOCw0LjYsMCw2LjRjLTEuOCwxLjgtNC42LDEuOC02LjQsMGwtNC4xLTQuMWwtMiwybDQuMSw0LjFjMi45LDIuOSw3LjUsMi45LDEwLjQsMAoJCQlDNTMuMiwzMjcuNSw1My4yLDMyMi45LDUwLjQsMzIweiIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTM4LDI0Yy04LjMsMC0xNSw2LjctMTUsMTVzNi43LDE1LDE1LDE1YzguMywwLDE1LTYuNywxNS0xNVM0Ni4zLDI0LDM4LDI0eiBNNDguNCwzM0g0NAoJCQljLTAuNS0xLjktMS4yLTMuNy0yLjEtNS4zQzQ0LjYsMjguNiw0Ni45LDMwLjUsNDguNCwzM3ogTTM4LDI3LjFjMS4yLDEuOCwyLjIsMy44LDIuOSw1LjloLTUuN0MzNS44LDMwLjksMzYuOCwyOC45LDM4LDI3LjF6CgkJCSBNMjYuNCw0MmMtMC4yLTEtMC40LTItMC40LTNzMC4xLTIsMC40LTNoNS4xYy0wLjEsMS0wLjIsMi0wLjIsM3MwLjEsMiwwLjIsM0gyNi40eiBNMjcuNiw0NUgzMmMwLjUsMS45LDEuMiwzLjcsMi4xLDUuMwoJCQlDMzEuNCw0OS40LDI5LjEsNDcuNSwyNy42LDQ1eiBNMzIsMzNoLTQuNGMxLjQtMi41LDMuNy00LjQsNi41LTUuM0MzMy4yLDI5LjMsMzIuNSwzMS4xLDMyLDMzeiBNMzgsNTAuOQoJCQljLTEuMi0xLjgtMi4yLTMuOC0yLjktNS45aDUuN0M0MC4yLDQ3LjEsMzkuMiw0OS4xLDM4LDUwLjl6IE00MS41LDQyaC03Yy0wLjEtMS0wLjItMi0wLjItM3MwLjEtMiwwLjItM2g3YzAuMSwxLDAuMiwyLDAuMiwzCgkJCVM0MS42LDQxLDQxLjUsNDJ6IE00MS45LDUwLjNjMC45LTEuNywxLjYtMy41LDIuMS01LjNoNC40QzQ2LjksNDcuNSw0NC42LDQ5LjQsNDEuOSw1MC4zeiBNNDQuNSw0MmMwLjEtMSwwLjItMiwwLjItMwoJCQlzLTAuMS0yLTAuMi0zaDUuMWMwLjIsMSwwLjQsMiwwLjQsM3MtMC4yLDItMC40LDNINDQuNXoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01MTcsMzE5YzYuNiwwLDEyLTUuNCwxMi0xMnMtNS40LTEyLTEyLTEycy0xMiw1LjQtMTIsMTJTNTEwLjQsMzE5LDUxNywzMTl6IE00OTAsMzEzdi05aC02djloLTl2Nmg5djloNgoJCQl2LTloOXYtNkg0OTB6IE01MTcsMzI1Yy04LDAtMjQsNC0yNCwxMnY2aDQ4di02QzU0MSwzMjksNTI1LDMyNSw1MTcsMzI1eiIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTQxOCw1OWMzLjMsMCw2LTIuNyw2LTZzLTIuNy02LTYtNnMtNiwyLjctNiw2UzQxNC43LDU5LDQxOCw1OXogTTQxOCw2MmMtNCwwLTEyLDItMTIsNnYzaDI0di0zCgkJCUM0MzAsNjQsNDIyLDYyLDQxOCw2MnoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0zNDcuOCw0My42bDMuOS0xOC4zYzAuMy0xLjQtMC42LTIuOS0yLjEtMy4ybC0xOC4zLTMuOWMtMS40LTAuMy0yLjksMC42LTMuMiwyLjFsLTMuOSwxOC4zCgkJCWMtMC4zLDEuNCwwLjYsMi45LDIuMSwzLjJsMTguMywzLjlDMzQ2LjEsNDYsMzQ3LjUsNDUuMSwzNDcuOCw0My42eiBNMzMzLDMzbDIuNCw0LjZsNS44LTQuOWw0LjIsOS4xbC0xOC4zLTMuOUwzMzMsMzN6Ii8+Cgk8L2c+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNDA3LjQsMzI2LjRsOS45LTI0LjdjMC4zLTAuOC0wLjUtMS42LTEuMy0xLjNsLTI0LjcsOS45Yy0wLjcsMC4zLTAuOCwxLjEtMC4zLDEuNmw2LjIsNi4ybDYuMi01LjIKCQkJYzAuOS0wLjgsMi4yLDAuNSwxLjQsMS40bC01LjIsNi4ybDYuMiw2LjJDNDA2LjMsMzI3LjMsNDA3LjIsMzI3LjEsNDA3LjQsMzI2LjR6Ii8+Cgk8L2c+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNNDM4LDI0NC4yYy0xLjUsMC0yLjksMC42LTMuOSwxLjVsLTE0LjMtOC4zYzAuMS0wLjUsMC4yLTAuOSwwLjItMS40YzAtMC41LTAuMS0wLjktMC4yLTEuNGwxNC4xLTguMgoJCQljMS4xLDEsMi41LDEuNiw0LjEsMS42YzMuMywwLDYtMi43LDYtNmMwLTMuMy0yLjctNi02LTZzLTYsMi43LTYsNmMwLDAuNSwwLjEsMC45LDAuMiwxLjRsLTE0LjEsOC4yYy0xLjEtMS0yLjUtMS42LTQuMS0xLjYKCQkJYy0zLjMsMC02LDIuNy02LDZjMCwzLjMsMi43LDYsNiw2YzEuNiwwLDMtMC42LDQuMS0xLjZsMTQuMiw4LjNjLTAuMSwwLjQtMC4yLDAuOS0wLjIsMS4zYzAsMy4yLDIuNiw1LjgsNS44LDUuOHM1LjgtMi42LDUuOC01LjgKCQkJUzQ0MS4yLDI0NC4yLDQzOCwyNDQuMnoiLz4KCTwvZz4KCTxnPgoJCTxjaXJjbGUgZmlsbD0iIzYxNjU2OCIgY3g9IjE4Ny4zIiBjeT0iMjcyLjYiIHI9IjYiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0xNjguMywyOTEuNmwtMTYuNS05LjFsLTAuMi00bDE2LjUsOS4xbDExLjgtOC4zYy0xLjUtMS42LTIuNS0zLjgtMi42LTYuMmwtMjYsMS40CgkJCWMtMi4yLDAuMS0zLjksMi0zLjgsNC4ybDEuMiwyNGMwLjEsMi4yLDIsMy45LDQuMiwzLjhsMzItMS43YzIuMi0wLjEsMy45LTIsMy44LTQuMmwtMC45LTE4Yy0xLjgsMC4xLTMuNi0wLjMtNS4xLTEuMQoJCQlMMTY4LjMsMjkxLjZ6Ii8+Cgk8L2c+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNjE2NTY4IiBkPSJNMzY2LDE4Mmg0di0xMmgtNFYxODJ6IE0zODgsMTcxYzAtMS4xLTAuOS0yLTItMmgtNi4zbDEtNC42bDAtMC4zYzAtMC40LTAuMi0wLjgtMC40LTEuMWwtMS4xLTEuMQoJCQlsLTYuNiw2LjZjLTAuNCwwLjQtMC42LDAuOS0wLjYsMS40djEwYzAsMS4xLDAuOSwyLDIsMmg5YzAuOCwwLDEuNS0wLjUsMS44LTEuMmwzLTcuMWMwLjEtMC4yLDAuMS0wLjUsMC4xLTAuN1YxNzFMMzg4LDE3MQoJCQlMMzg4LDE3MXoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik01NzcsMjgyLjhjMC00LjYsMy43LTguMiw4LjItOC4ySDYwMWMzLjMsMCw2LDIuNyw2LDZzLTIuNyw2LTYsNmgtMTIuOGMtMi4xLDAtMy44LTEuNy0zLjgtMy44CgkJCXMxLjctMy44LDMuOC0zLjhoMTEuMnYzaC0xMS40Yy0wLjgsMC0wLjgsMS41LDAsMS41SDYwMWMxLjcsMCwzLTEuNCwzLTNzLTEuMy0zLTMtM2gtMTUuOGMtMi45LDAtNS4yLDIuNC01LjIsNS4yCgkJCXMyLjQsNS4yLDUuMiw1LjJoMTQuMnYzaC0xNC4yQzU4MC43LDI5MSw1NzcsMjg3LjMsNTc3LDI4Mi44eiIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTczLjgsMTM3LjJsLTkuOC0yLjFjLTEuMS0wLjItMi4xLDAuNS0yLjQsMS41bC0zLjMsMTUuNmw3LjUtMS41bDYuMiw0LjRsMy4zLTE1LjcKCQkJQzc1LjUsMTM4LjUsNzQuOCwxMzcuNSw3My44LDEzNy4yeiIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTMxMy44LDEyMC45Yy0xLjYsMS41LTQsMS41LTUuNSwwYy01LjUtNS4zLTE3LjItMTcuMy0xNy4yLTIzLjFjMC02LjIsNC44LTExLDExLTExYzMuNSwwLDYuOCwxLjYsOSw0LjIKCQkJYzIuMi0yLjYsNS41LTQuMiw5LTQuMmM2LjIsMCwxMSw0LjgsMTEsMTFDMzMxLDEwMy42LDMxOS4zLDExNS42LDMxMy44LDEyMC45eiIvPgoJPC9nPgoJPGc+CgkJPGNpcmNsZSBmaWxsPSIjNjE2NTY4IiBjeD0iMjM3LjciIGN5PSIzMzgiIHI9IjIuNSIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTIyOS44LDMyNC41bDEuMiwzLjFjNy42LTIuOSwxNi4xLDAuOSwxOSw4LjVsMy4xLTEuMkMyNDkuNSwzMjUuNSwyMzkuMSwzMjAuOSwyMjkuOCwzMjQuNXogTTIzMi4xLDMzMC42CgkJCWwxLjIsMy4xYzQuMi0xLjYsOC45LDAuNSwxMC42LDQuN2wzLjEtMS4yQzI0NC43LDMzMS4zLDIzOCwzMjguMywyMzIuMSwzMzAuNnoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik0yNTcsMTQ4Yy04LjMsMC0xNSw2LjctMTUsMTVjMCw4LjMsNi43LDE1LDE1LDE1czE1LTYuNywxNS0xNUMyNzIsMTU0LjcsMjY1LjMsMTQ4LDI1NywxNDh6IE0yNTEuOCwxNTUuNQoJCQljMS4yLDAsMi4yLDEuMywyLjIsM2MwLDEuNy0xLDMtMi4yLDNzLTIuMi0xLjMtMi4yLTNDMjQ5LjUsMTU2LjgsMjUwLjUsMTU1LjUsMjUxLjgsMTU1LjV6IE0yNTcsMTcyLjhjLTIuNiwwLTUuNy0yLTcuNi00LjMKCQkJYy0wLjgtMS0wLjEtMi41LDEuMi0yLjVoMTIuOWMxLjMsMCwyLDEuNSwxLjIsMi41QzI2Mi43LDE3MC43LDI1OS42LDE3Mi44LDI1NywxNzIuOHogTTI2Mi4yLDE2MS41Yy0xLjIsMC0yLjItMS4zLTIuMi0zCgkJCWMwLTEuNywxLTMsMi4yLTNzMi4yLDEuMywyLjIsM0MyNjQuNSwxNjAuMiwyNjMuNSwxNjEuNSwyNjIuMiwxNjEuNXoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGZpbGw9IiM2MTY1NjgiIGQ9Ik02MDQsMTUyLjljLTAuNiwwLTEuMSwwLjUtMS4xLDEuMXMwLjUsMS4xLDEuMSwxLjFzMS4xLTAuNSwxLjEtMS4xUzYwNC42LDE1Mi45LDYwNCwxNTIuOXogTTYwNCwxNDQKCQkJYy01LjUsMC0xMCw0LjUtMTAsMTBzNC41LDEwLDEwLDEwczEwLTQuNSwxMC0xMFM2MDkuNSwxNDQsNjA0LDE0NHogTTYwNi4yLDE1Ni4yTDU5OCwxNjBsMy44LTguMmw4LjItMy44TDYwNi4yLDE1Ni4yeiIvPgoJPC9nPgoJPGc+CgkJPHBhdGggZmlsbD0iIzYxNjU2OCIgZD0iTTE4MC40LDEwNS44bDkuNy0xMS44YzAuNS0wLjYsMS41LTAuNCwxLjcsMC40bDkuMywzNC45YzAuMiwwLjgtMC42LDEuNS0xLjMsMS4ybC0xNC4zLTUuNGwtMy45LDEKCQkJbDAuNSwxLjljMC4zLDEuMS0wLjMsMi4yLTEuNCwyLjRsLTEuOSwwLjVsMi4xLDcuN2MwLjMsMS4xLTAuMywyLjItMS40LDIuNGwtMy45LDFjLTEuMSwwLjMtMi4yLTAuMy0yLjQtMS40bC0zLjEtMTEuNmwtNS44LDEuNgoJCQlsLTQuOS0yLjhsLTMuMS0xMS42bDIuOC00LjlMMTgwLjQsMTA1Ljh6Ii8+Cgk8L2c+CjwvZz4KPGcgaWQ9IkViZW5lXzIiIGRpc3BsYXk9Im5vbmUiPgo8L2c+Cjwvc3ZnPgo=","color":"#5acece"}},"showPreview":0,"welcome_screen":"https:\/\/qrcgcustomers.s3-eu-west-1.amazonaws.com\/account36829864\/48025061_1.png?0.5776189756148884","sharing":true};
+
+            //Upgrade old vcards created before 13.04 with show_directions parameter
+            if (angular.isUndefined(json_data.show_directions))
+                json_data.show_directions = true;
+
+            previewService.pushData(json_data);
+
+            function setAvatarBackgroundImage() {
+                if ($scope.view.code) {
+                    if ($scope.view.code.avatar)
+                        return {
+                            'background': 'url(' + $scope.view.code.avatar + ')'
+                        };
+                    else return {
+                        'height': '0px',
+                        'background': 'none'
+                    }
+                }
+            }
+
+            function getBackgroundColor() {
+                if ($scope.view.code) {
+                    var color1 = $scope.view.code.color1 || '#607d8b';
+                    if (!$scope.view.code.show_gradient)
+                        return {"background": color1};
+                }
+            }
+
+            $scope.getBackgroundColor = getBackgroundColor;
+            $scope.setAvatarBackgroundImage = setAvatarBackgroundImage;
+
+            window.setTimeout(function () {
+
+                $(".loading-vcard").fadeOut();
+                $(".vcard-functions-wrapper a:visible:last").addClass("last-element");
+            }, 500);
+
+            /**
+             * Copy short ulr to clipboard
+             *
+             * @param elem - input element with the link
+             * */
+            $scope.ifCopySucceed = false;
+            $scope.copyLinkToClipboard = function (elem) {
+                var targetId = "_hiddenCopyText_";
+                var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+                var origSelectionStart, origSelectionEnd;
+                if (isInput) {
+                    // can just use the original source element for the selection and copy
+                    target = elem;
+                    origSelectionStart = elem.selectionStart;
+                    origSelectionEnd = elem.selectionEnd;
+                } else {
+                    // must use a temporary form element for the selection and copy
+                    target = document.getElementById(targetId);
+                    if (!target) {
+                        var target = document.createElement("textarea");
+                        target.style.position = "absolute";
+                        target.style.left = "-9999px";
+                        target.style.top = "0";
+                        target.id = targetId;
+                        document.body.appendChild(target);
+                    }
+                    target.textContent = elem.textContent;
+                }
+                // select the content
+                var currentFocus = document.activeElement;
+                target.focus();
+                target.setSelectionRange(0, target.value.length);
+
+                // copy the selection
+                var succeed;
+                try {
+                    succeed = document.execCommand("copy");
+                } catch (e) {
+                    succeed = false;
+                }
+                // restore original focus
+                if (currentFocus && typeof currentFocus.focus === "function") {
+                    currentFocus.focus();
+                }
+
+                if (isInput) {
+                    // restore prior selection
+                    elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+                } else {
+                    // clear temporary content
+                    target.textContent = "";
+                }
+                $scope.$apply(function () {
+                    $scope.ifCopySucceed = succeed;
+                });
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.ifCopySucceed = false;
+                    });
+                }, 1500)
+            };
+
+            /**
+             * Set text color based on the background
+             *
+             * @param color - background color
+             * */
+            $scope.isColorLight = function (color) {
+                var c;
+                if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(color)) {
+                    c = color.substring(1).split('');
+                    if (c.length == 3) {
+                        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+                    }
+                    c = '0x' + c.join('');
+
+                    var r = (c >> 16) & 255,
+                        g = (c >> 8) & 255,
+                        b = c & 255;
+                    // Counting the perceptive luminance
+                    // human eye favors green color...
+                    var a = 1 - (0.240 * r + 0.470 * g + 0.150 * b) / 255;
+                    return (a < 0.4);
+                }
+            };
+            /**
+             * Watch showPreview value
+             *
+             * @param p1 - new value
+             * @param p2 - old value
+             * */
+            $scope.$watch("view.showPreview", function (p1, p2, p3) {
+                if (p1 != undefined && p1 == 'infinite') {
+                    setTimeout(function () {
+                        $(".loading-welcome.welcome-screen").show();
+                        $("#welcomeImg").fadeIn(1000);
+                    }, 500)
+                } else if (p1 == undefined && p2 != undefined && p2 == 'infinite') {
+                    $("#welcomeImg").hide();
+                    $(".loading-welcome").fadeOut();
+                } else if ((p1 != undefined && p2 != undefined && p1 != p2) || (p1 != undefined && p1 != 0 && p2 == undefined && p1 != p2)) {
+                    setTimeout(function () {
+                        $(".loading-welcome.welcome-screen").show();
+                        $("#welcomeImg").hide();
+                        $("#welcomeImg").fadeIn(1000);
+                        setTimeout(function () {
+                            $(".loading-welcome").fadeOut();
+                        }, 2000)
+                    }, 500)
+                }
+            });
+
+            $scope.setAvatar = function () {
+                return {
+                    'background': $scope.view.code.avatar ? 'url(' + $scope.view.code.avatar + ')' : 'none'
+                }
+            };
+
+            /**
+             * Set avatar background with extra options like zoom and background color
+             * */
+            $scope.setAvatarExtra = function () {
+                var style = {};
+                if ($scope.view.code) {
+                    /*
+                    * Apply custom header image and background color
+                    * */
+                    if ($scope.view.code.customHeaderImage && $scope.view.code.customHeaderImage.url) {
+                        if ($scope.view.code.customHeaderImage.color != null) {
+                            style = {
+                                'background-color': $scope.view.code.customHeaderImage.color,
+                                '-webkit-mask': 'url("' + $scope.view.code.customHeaderImage.url + '") no-repeat 50% 50%',
+                                'mask': 'url("' + $scope.view.code.customHeaderImage.url + '") no-repeat 50% 50%',
+                                '-webkit-mask-size': 'cover',
+                                'mask-size':'cover'
+                            };
+                            $('.vcard-top-info.avatar-container').css('background-color', $scope.view.code.customHeaderImage.color);
+                        } else
+                            style = {
+                                'background-image': 'url("' + $scope.view.code.customHeaderImage.url + '")',
+                                'background-size': '100%'
+                            }
+                    }
+                    else if ($scope.view.code.avatar)
+                        style = {
+                            'background': 'url("' + $scope.view.code.avatar + '")',
+                            'background-size': '100%!important',
+                            'background-color': '#ffffff'
+                        };
+                    else
+                        style = {
+                            'height': '0px',
+                            'background': 'none'
+                        };
+                    if ($scope.view.code.avatar_extra) {
+                        style['background-size'] = $scope.view.code.avatar_extra.zoom + '%';
+                        if (!($scope.view.code.customHeaderImage && $scope.view.code.customHeaderImage.url && $scope.view.code.customHeaderImage.color != null)) {
+                            style['background-color'] = $scope.view.code.avatar_extra.background;
+                        }
+                    }
+                }
+                // Convert array to string to avoid problems with vendor prefixes.
+                var string_style = '';
+                angular.forEach(style, function (value, key) {
+                    string_style += key + ': ' + value + ';';
+                });
+                // Bad solution, but works (Alex).
+                $('.vcard-top-info.avatar-container').attr('style', string_style);
+                return {};
+            };
+
+            /**
+             * Watch avatarExtra values and set the css
+             * */
+            $scope.$watch('view.code.avatar_extra', function (newVal) {
+                if (newVal) {
+                    $('.avatar-container').css({
+                        'background-size': newVal.zoom + '%!important',
+                        'background-color': newVal.background,
+                        'background-position': 'center center'
+                    });
+                }
+            });
+
+            $(document).ready(function () {
+                /**
+                 * To work, function 'copyLinkToClipboard' needs to be called from an event listener on the copy button
+                 * */
+                document.getElementById("copyButton").addEventListener("click", function () {
+                    $scope.copyLinkToClipboard(document.getElementById("shortUrl"));
+                });
+            })
+
+        }
+    );
+
+    if (parent && typeof parent.ImHere === "function") {
+        parent.ImHere();
+    } else {
+        //Only load this on standalone pages not inframe working
+        SocialShareKit.init();
+    }
+
+    /**
+     * Toggle fab
+     *
+     * @param id - id of the fab
+     */
+    function toggleFab(id) {
+
+        $(id + ' .prime').toggleClass('is-active');
+        $(id + ' #prime').toggleClass('is-float');
+        $($(id).parent()).toggleClass('fabOnTop');
+        $('#prime.fab').toggleClass('disabledClick');
+        $(id + ' .fixed-blur-bgd').toggle();
+        $(id + ' .chat').toggleClass('is-visible');
+
+    }
+
+    $(document).ready(function () {
+
+        /**
+         * On window resize if width is bigger then tablet remove calendar and share mobile style
+         * */
+        $(window).resize(function () {
+            if (window.innerWidth >= 667) {
+                $('.follow-scroll.calendar-container').removeAttr('style');
+                $('.follow-scroll.share-container').removeAttr('style');
+            }
+        });
+
+        /**
+         * Close fab from close icon
+         * */
+        $('#prime, .icon-fab-close').click(function () {
+            var id = $($(this).closest('.fabs')).attr('id');
+            toggleFab('#' + id);
+        });
+
+        /**
+         * Close fab on blur bgd click
+         * */
+        $('.fixed-blur-bgd').click(function () {
+            if (event.target == $(this)[0]) {
+                $($("#prime.is-float").parent().parent()).removeClass('fabOnTop');
+                $('.prime').removeClass('is-active');
+                $('#prime').removeClass('is-float');
+                $('#prime.fab').removeClass('disabledClick');
+                $('.chat, .dialog-container').removeClass('is-visible');
+                $(this).hide();
+            }
+        });
+
+
+        /**
+         * Ripple effect on element
+         */
+        var ink, d, x, y;
+        $(".ripplelink").click(function (e) {
+            if ($(this).find(".ink").length === 0) {
+                $(this).prepend("<span class='ink'></span>");
+            }
+
+            ink = $(this).find(".ink");
+            ink.removeClass("animate");
+
+            if (!ink.height() && !ink.width()) {
+                d = Math.max($(this).outerWidth(), $(this).outerHeight());
+                ink.css({height: d, width: d});
+            }
+
+            x = e.pageX - $(this).offset().left - ink.width() / 2;
+            y = e.pageY - $(this).offset().top - ink.height() / 2;
+
+            ink.css({top: y + 'px', left: x + 'px'}).addClass("animate");
+        });
+    });
+
+
+/*]]>*/
+</script>
+</body>
+
+</body>
+
+<!-- Mirrored from qrco.de/karthikeyan by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Aug 2024 19:38:46 GMT -->
+</html>
